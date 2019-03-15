@@ -11,28 +11,28 @@ Model Predictive Control involves simulating different actuator inputs, predicti
 The Model used for this project is simple Kinematic Vehicle Model. This model is less complex and runs faster as compared to Dynamic Model. This model doesn't consider other forces, interaction of tires with road, etc.
 
 The vehicle state is defined by following variables:
-*x*, *y* = position of vehicle
-*ψ* = orientation of vehicle
-*v* = velocity of vehicle
-*cte* = cross track error
-*eψ* = orientation error
+<br>*x*, *y* = position of vehicle
+<br>*ψ* = orientation of vehicle
+<br>*v* = velocity of vehicle
+<br>*cte* = cross track error
+<br>*eψ* = orientation error
 
 Actuator outputs are:
-*δ* = steering angle
-*a* = acceleration
+<br>*δ* = steering angle
+<br>*a* = acceleration
 
 State update equations for the model are defined as follow:
-*x<sub>t+1</sub> = x<sub>t</sub> + v<sub>t</sub>cos(ψ<sub>t</sub>) * dt*
-*y<sub>t+1</sub> = y<sub>t</sub> + v<sub>t</sub>sin(ψ<sub>t</sub>) * dt*
-*ψ<sub>t+1</sub> = ψ<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>)δ<sub>t</sub> * dt*
-*v<sub>t+1</sub> = v<sub>t</sub> + a<sub>t</sub> * dt*
-*cte<sub>t+1</sub> = f(x<sub>t</sub>) - y<sub>t</sub> + v<sub>t</sub>sin(eψ<sub>t</sub>) * dt*
-*eψ<sub>t+1</sub> = ψ<sub>t</sub> - ψdes<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>)δ<sub>t</sub> * dt*
+<br>*x<sub>t+1</sub> = x<sub>t</sub> + v<sub>t</sub>cos(ψ<sub>t</sub>) * dt*
+<br>*y<sub>t+1</sub> = y<sub>t</sub> + v<sub>t</sub>sin(ψ<sub>t</sub>) * dt*
+<br>*ψ<sub>t+1</sub> = ψ<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>)δ<sub>t</sub> * dt*
+<br>*v<sub>t+1</sub> = v<sub>t</sub> + a<sub>t</sub> * dt*
+<br>*cte<sub>t+1</sub> = f(x<sub>t</sub>) - y<sub>t</sub> + v<sub>t</sub>sin(eψ<sub>t</sub>) * dt*
+<br>*eψ<sub>t+1</sub> = ψ<sub>t</sub> - ψdes<sub>t</sub> + (v<sub>t</sub>/L<sub>f</sub>)δ<sub>t</sub> * dt*
 
 where, 
-*ψdes = arctan(f'(x))*
-*f(x) = a<sub>0</sub> + a<sub>1</sub> * x*
-*f'(x) = a<sub>1</sub>*
+<br>*ψdes = arctan(f'(x))*
+<br>*f(x) = a<sub>0</sub> + a<sub>1</sub> * x*
+<br>*f'(x) = a<sub>1</sub>*
 
 ### Timestep Length and Elapsed Duration (N & dt)
 
