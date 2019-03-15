@@ -59,6 +59,7 @@ int main() {
           double steer_value;
           double throttle_value;
 
+          // Handle Latency
           // predict the next state using global kinematic model
           //double delta = j[1]["steering_angle"];
           //double a = j[1]["throttle"];

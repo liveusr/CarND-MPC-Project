@@ -113,6 +113,7 @@ class FG_eval {
       // Consider the actuation at time t if t = 1, otherwise consider at time t - 2.
       AD<double> delta0 = vars[delta_start + t - 1];
       AD<double> a0 = vars[a_start + t - 1];
+      // Handle Latency
       if (t > 1) {
         delta0 = vars[delta_start + t - 2];
         a0 = vars[a_start + t - 2];
