@@ -31,8 +31,8 @@ State update equations for the model are defined as follow:
 
 where, 
 <br>*ψdes = arctan(f'(x))*
-<br>*f(x) = a<sub>0</sub> + a<sub>1</sub> * x*
-<br>*f'(x) = a<sub>1</sub>*
+<br>*f(x) = a<sub>0</sub> + a<sub>1</sub> x + a<sub>2</sub> x<sup>2</sup> + a<sub>3</sub> x<sup>3</sup>*
+<br>*f'(x) = a<sub>1</sub> + 2a<sub>2</sub> x + 3a<sub>3</sub> x<sup>2</sup>*
 
 ### Timestep Length and Elapsed Duration (N & dt)
 
@@ -44,7 +44,7 @@ First, waypoints provided by simulator are transformed to car coordinate system.
 
 ### Model Predictive Control with Latency
 
-In a real car, actuation command won't execute instantly, there will be a delay as the command propagates through the system. For this project, delay - also called as Latency - is assumed as *100ms*. Kinematic equations calculate actuations based on previous actuations. In my implementation, *dt* is 0.1 seconds which is equal to Latency. So, to compensate for Latency, I'm using actuations values at timestep *t-2* instead of timestep *t-1*. Another way to handle this could be predicting its next state based on current state and latency. But this approach did not work well, so I used one timestep older actuation values as explained.   
+In a real car, actuation command won't execute instantly, there will be a delay as the command propagates through the system. For this project, delay - also called as Latency - is assumed as *100ms*. Kinematic equations calculate actuations based on previous actuations. So, to compensate for this latency, I'm predicting new state using previous actuations and latency. This new state is used to transform points and then fed to MPC. The resulting state from the simulation is the new initial state for MPC. Thus, MPC can deal with latency by explicitly taking it into account.
 
 ## Results
 

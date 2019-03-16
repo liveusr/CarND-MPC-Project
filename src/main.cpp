@@ -61,13 +61,13 @@ int main() {
 
           // Handle Latency
           // predict the next state using global kinematic model
-          //double delta = j[1]["steering_angle"];
-          //double a = j[1]["throttle"];
-          //
-          //px = px + v * cos(psi) * dt;
-          //py = py + v * sin(psi) * dt;
-          //psi = psi + (v / Lf) * delta * dt;
-          //v = v + a * dt;
+          double delta = j[1]["steering_angle"];
+          double a = j[1]["throttle"];
+          
+          px = px + v * cos(psi) * dt;
+          py = py + v * sin(psi) * dt;
+          psi = psi - (v / Lf) * delta * dt;
+          v = v + a * dt;
 
           // Transform simulator points to vehicle coordinate system
           Eigen::VectorXd xvals(ptsx.size());

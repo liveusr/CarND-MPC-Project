@@ -30,7 +30,7 @@ double dt = 0.1;
 
 // Both the reference cross track and orientation errors are 0.
 // The reference velocity is set to 80 mph.
-double ref_v = 80;
+double ref_v = 60;
 
 // The solver takes all the state variables and actuator
 // variables in a singular vector. Thus, we should to establish
@@ -64,21 +64,21 @@ class FG_eval {
 
     // The part of the cost based on the reference state.
     for (unsigned int t = 0; t < N; ++t) {
-      fg[0] += 2000 * CppAD::pow(vars[cte_start + t], 2);
-      fg[0] += 3000 * CppAD::pow(vars[epsi_start + t], 2);
+      fg[0] +=        CppAD::pow(vars[cte_start + t], 2);
+      fg[0] +=  200 * CppAD::pow(vars[epsi_start + t], 2);
       fg[0] +=        CppAD::pow(vars[v_start + t] - ref_v, 2);
     }
 
     // Minimize the use of actuators.
     for (unsigned int t = 0; t < N - 1; ++t) {
-      fg[0] += 2000 * CppAD::pow(vars[delta_start + t], 2);
-      fg[0] += 100  * CppAD::pow(vars[a_start + t], 2);
+      fg[0] += 1000 * CppAD::pow(vars[delta_start + t], 2);
+      fg[0] +=        CppAD::pow(vars[a_start + t], 2);
     }
 
     // Minimize the value gap between sequential actuations.
     for (unsigned int t = 0; t < N - 2; ++t) {
-      fg[0] += 500 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-      fg[0] += 100 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      fg[0] +=  500 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      fg[0] +=        CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
     }
 
     // Setup Initial constraints
@@ -114,10 +114,10 @@ class FG_eval {
       AD<double> delta0 = vars[delta_start + t - 1];
       AD<double> a0 = vars[a_start + t - 1];
       // Handle Latency
-      if (t > 1) {
-        delta0 = vars[delta_start + t - 2];
-        a0 = vars[a_start + t - 2];
-      }
+      //if (t > 1) {
+      //  delta0 = vars[delta_start + t - 2];
+      //  a0 = vars[a_start + t - 2];
+      //}
 
       AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2] * CppAD::pow(x0, 2) + coeffs[3] * CppAD::pow(x0, 3);
       AD<double> psides0 = CppAD::atan(coeffs[1] + 2 * coeffs[2] * x0 + 3 * coeffs[3] * CppAD::pow(x0, 2));
